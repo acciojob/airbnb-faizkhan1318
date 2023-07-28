@@ -44,21 +44,18 @@ public class HotelManagementRepository {
 
         int count=0;
         String ans="";
+        for(Hotel hotel : hotelMap.values()) {
+            count=Math.max(count, hotel.getFacilities().size());
+        }
+        if(count==0) return "";
         for(Hotel hotel : hotelMap.values()){
-            if(hotel.getFacilities().size()==0){
-                return "";
-            }
-            if(hotel.getFacilities().size() > count){
-                ans=hotel.getHotelName();
-                count = hotel.getFacilities().size();
-            }
-            else if(count==hotel.getFacilities().size()){
+            if(count==hotel.getFacilities().size()){
                 if(hotel.getHotelName().compareTo(ans)<0){
                     ans=hotel.getHotelName();
                 }
             }
         }
-        return "";
+        return ans;
     }
 
     public int booking(Booking booking) {
