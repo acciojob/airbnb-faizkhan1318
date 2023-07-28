@@ -23,9 +23,7 @@ public class HotelManagementRepository {
         else if (hotelMap.containsKey(hotel.getHotelName())){
             return "FAILURE";
         }
-        else {
-            hotelMap.put(hotel.getHotelName(), hotel);
-        }
+        hotelMap.put(hotel.getHotelName(), hotel);
         return "SUCCESS";
     }
 
@@ -38,24 +36,7 @@ public class HotelManagementRepository {
     }
 
     public String hotelWithMostFacility() {
-        //Out of all the hotels we have added so far, we need to find the hotelName with most no of facilities
-        //Incase there is a tie return the lexicographically smaller hotelName
-        //Incase there is not even a single hotel with atleast 1 facility return "" (empty string)
 
-//        int count=0;
-//        String ans="";
-//        for(Hotel hotel : hotelMap.values()) {
-//            count=Math.max(count, hotel.getFacilities().size());
-//        }
-//        if(count==0) return "";
-//        for(Hotel hotel : hotelMap.values()){
-//            if(count==hotel.getFacilities().size()){
-//                if(hotel.getHotelName().compareTo(ans)<0){
-//                    ans=hotel.getHotelName();
-//                }
-//            }
-//        }
-//        return ans;
         int maxFacility=0;
         List<String> hotelNames = new ArrayList<>();
 
@@ -107,16 +88,16 @@ public class HotelManagementRepository {
 
     public Hotel updateFacility(List<Facility> newFacilities, String hotelName) {
 
-        //We are having a new facilites that a hotel is planning to bring.
-        //If the hotel is already having that facility ignore that facility otherwise add that facility in the hotelDb
-        //return the final updated List of facilities and also update that in your hotelDb
-        //Note that newFacilities can also have duplicate facilities possible
         Hotel hotel = hotelMap.get(hotelName);
-        if(hotel == null) return null;
+        if (hotel == null) {
+            return null;
+        }
+
         Set<Facility> facilities = new HashSet<>(hotel.getFacilities());
-        for(Facility facility : facilities){
+        for (Facility facility : newFacilities) {
             facilities.add(facility);
         }
+
         hotel.setFacilities(new ArrayList<>(facilities));
         hotelMap.put(hotelName, hotel);
         return hotel;
