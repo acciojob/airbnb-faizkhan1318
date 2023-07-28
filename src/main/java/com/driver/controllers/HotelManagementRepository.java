@@ -42,20 +42,36 @@ public class HotelManagementRepository {
         //Incase there is a tie return the lexicographically smaller hotelName
         //Incase there is not even a single hotel with atleast 1 facility return "" (empty string)
 
-        int count=0;
-        String ans="";
-        for(Hotel hotel : hotelMap.values()) {
-            count=Math.max(count, hotel.getFacilities().size());
+//        int count=0;
+//        String ans="";
+//        for(Hotel hotel : hotelMap.values()) {
+//            count=Math.max(count, hotel.getFacilities().size());
+//        }
+//        if(count==0) return "";
+//        for(Hotel hotel : hotelMap.values()){
+//            if(count==hotel.getFacilities().size()){
+//                if(hotel.getHotelName().compareTo(ans)<0){
+//                    ans=hotel.getHotelName();
+//                }
+//            }
+//        }
+//        return ans;
+        int maxFacility=0;
+        List<String> hotelNames = new ArrayList<>();
+
+        for(String key:hotelMap.keySet()){
+            List<Facility>facilities=hotelMap.get(key).getFacilities();
+            maxFacility=Math.max(maxFacility,facilities.size());
         }
-        if(count==0) return "";
-        for(Hotel hotel : hotelMap.values()){
-            if(count==hotel.getFacilities().size()){
-                if(hotel.getHotelName().compareTo(ans)<0){
-                    ans=hotel.getHotelName();
-                }
+        if(maxFacility==0) return "";
+        for(String key:hotelMap.keySet()){
+            List<Facility>facilities=hotelMap.get(key).getFacilities();
+            if(maxFacility==facilities.size()){
+                hotelNames.add(key);
             }
         }
-        return ans;
+        Collections.sort(hotelNames);
+        return hotelNames.get(0);
     }
 
     public int booking(Booking booking) {
